@@ -1,0 +1,56 @@
+---
+ - name: Install JAVA
+   become: yes
+   become_user: ubuntu
+   shell: |
+         sudo apt-get install default-jdk
+ - name: Update All
+   shell: |
+         sudo apt-get update
+ - name: Add tomcat
+   shell: |
+         sudo groupadd tomcat99
+ - name: Adding user
+   shell: |
+         sudo useradd -s /bin/false -g tomcat99 -d /opt/tomcat99 tomcat99
+ - name: Download Tomcat
+   shell: |
+         curl -O https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.54/bin/apache-tomcat-9.0.54.tar.gz
+ - name: Creating folder
+   shell:
+          sudo mkdir /opt/tomcat99
+ - name: Extracting
+   shell:
+          sudo tar xzvf apache-tomcat-9.0.54.tar.gz -C /opt/tomcat99
+ - name: Changing Permissions
+   shell: |
+          sudo chgrp -R tomcat99 /opt/tomcat99
+          cd /opt/tomcat99/apache-tomcat-9.0.54
+          sudo chmod -R g+r conf
+          sudo chmod g+x conf
+          sudo chown -R tomcat99 webapps work temp logs
+ - name: Demon Reload
+   shell:
+          sudo systemctl daemon-reload
+ - name: Start Tomcat
+   shell:
+         sudo systemctl start tomcat.service
+ubuntu@master:/etc/ansible$ cat maven/tasks/main.yml
+---
+  - name: Install Python
+    become: yes
+    become_user: ubuntu
+    shell: |
+          sudo apt install -y software-properties-common
+  - name: Add Java
+    shell: |
+          sudo apt-get install default-jdk
+  - name: Update ALL
+    shell: |
+          sudo apt update
+  - name: Install Maven
+    shell: |
+          sudo apt install maven
+  - name: Checking Maven Version
+    shell: |
+          mvn --version
