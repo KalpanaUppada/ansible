@@ -1,0 +1,20 @@
+[Unit]
+Description=Apache Tomcat Web Application Container
+After=network.targetd
+[Service]
+Type=forking
+Environment=JAVA_HOME= /usr/lib/jvm/java-17-openjdk-amd64/
+Environment=CATALINA_PID=/opt/tomcat99/apache-tomcat-9.0.54/temp/tomcat.pid
+Environment=CATALINA_HOME=/opt/tomcat99/apache-tomcat-9.0.54
+Environment=CATALINA_BASE=/opt/tomcat99/apache-tomcat-9.0.54
+Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
+Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
+ExecStart=/opt/tomcat99/apache-tomcat-9.0.54/bin/startup.sh
+ExecStop=/opt/tomcat99/apache-tomcat-9.0.54/bin/shutdown.sh
+User=tomcat99
+Group=tomcat99
+UMask=0007
+RestartSec=10
+Restart=always
+[Install]
+WantedBy=multi-user.target
