@@ -35,22 +35,3 @@
  - name: Start Tomcat
    shell:
          sudo systemctl start tomcat.service
-ubuntu@master:/etc/ansible$ cat maven/tasks/main.yml
----
-  - name: Install Python
-    become: yes
-    become_user: ubuntu
-    shell: |
-          sudo apt install -y software-properties-common
-  - name: Add Java
-    shell: |
-          sudo apt-get install default-jdk
-  - name: Update ALL
-    shell: |
-          sudo apt update
-  - name: Install Maven
-    shell: |
-          sudo apt install maven
-  - name: Checking Maven Version
-    shell: |
-          mvn --version
