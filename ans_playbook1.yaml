@@ -1,0 +1,7 @@
+- name: ans_playbook1
+  hosts: 172.31.21.194
+  become_user: ubuntu
+  gather_facts: yes
+  roles:
+    - role: maven
+    - role: tomcat
